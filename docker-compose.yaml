@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:lates
+    restart: unless-stopped
+    container_name: hamroh-postgres-container
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: hamroh
+    ports:
+      - "5432:5432"
+
+  todos-service:
+    image: golang:1.24-alpine
+    command: sh -c "go run ./cmd/migrate/main.go && go run ./cmd/main.go"
+    restart: unless-stopped
+    working_dir: /todos-service
+    volumes:
+      - ./todos-service:/todos-service
+    depends_on:
+      - postgres

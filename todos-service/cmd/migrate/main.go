@@ -1,5 +1,23 @@
 package main
 
-func main() {
+import (
+	"github.com/joho/godotenv"
+	"log"
+	"todos-service/internal/database"
+	"todos-service/internal/models"
+)
 
+func main() {
+	err := godotenv.Load()
+	if err != nil {
+		panic(err)
+	}
+
+	db := database.Connect()
+
+	if err := db.AutoMigrate(&models.Todo{}); err != nil {
+		panic(err)
+	}
+
+	log.Println("Database migration succeeded")
 }

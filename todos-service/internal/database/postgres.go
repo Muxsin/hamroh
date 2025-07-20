@@ -8,7 +8,7 @@ import (
 )
 
 func Connect() *gorm.DB {
-	db, err := gorm.Open(postgres.Open(os.Getenv("DATABASE_URL")), &gorm.Config{})
+	db, err := gorm.Open(postgres.Open(os.Getenv("DSN_POSTGRES")), &gorm.Config{})
 
 	if err != nil {
 		panic(err)

@@ -69,7 +69,24 @@ func (h *TodoHandler) List(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{"todos": todos})
 }
 
-func (h *TodoHandler) GetById(ctx *gin.Context) {}
+func (h *TodoHandler) GetById(ctx *gin.Context) {
+	id := ctx.Param("id")
+	todo, err := h.todo_repository.GetById(id)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Internal Server Error"})
+		return
+	}
+
+	response := responses.TodoResponse{
+		Id:        todo.ID,
+		Text:      todo.Text,
+		Done:      todo.Done,
+		UserID:    todo.UserID,
+		CreatedAt: todo.CreatedAt.Format(time.RFC3339),
+	}
+
+	ctx.JSON(http.StatusOK, response)
+}
 
 func (h *TodoHandler) Update(ctx *gin.Context) {}
 

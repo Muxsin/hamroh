@@ -52,7 +52,14 @@ func (r *TodoRepository) List() ([]models.Todo, error) {
 }
 
 func (r *TodoRepository) GetById(id string) (models.Todo, error) {
-	return models.Todo{}, nil
+	var todo models.Todo
+
+	result := r.db.First(&todo, id)
+	if result.Error != nil {
+		return todo, result.Error
+	}
+
+	return todo, nil
 }
 
 func (r *TodoRepository) Update(id string) error {

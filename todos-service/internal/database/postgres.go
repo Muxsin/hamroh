@@ -7,14 +7,14 @@ import (
 	"os"
 )
 
-func Connect() *gorm.DB {
+func Connect() (*gorm.DB, error) {
 	db, err := gorm.Open(postgres.Open(os.Getenv("DSN_POSTGRES")), &gorm.Config{})
 
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	log.Println("Successfully connected to database")
 
-	return db
+	return db, nil
 }

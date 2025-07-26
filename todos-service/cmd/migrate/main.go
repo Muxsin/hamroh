@@ -8,12 +8,14 @@ import (
 )
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
+	if err := godotenv.Load(); err != nil {
 		panic(err)
 	}
 
-	db := database.Connect()
+	db, err := database.Connect()
+	if err != nil {
+		panic(err)
+	}
 
 	if err := db.AutoMigrate(&models.Todo{}); err != nil {
 		panic(err)

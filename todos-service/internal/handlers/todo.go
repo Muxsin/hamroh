@@ -56,7 +56,7 @@ func (h *TodoHandler) Create(ctx *gin.Context) {
 		CreatedAt: todo.CreatedAt.Format(time.RFC3339),
 	}
 
-	ctx.JSON(http.StatusOK, response)
+	ctx.JSON(http.StatusCreated, response)
 }
 
 func (h *TodoHandler) List(ctx *gin.Context) {
@@ -114,4 +114,14 @@ func (h *TodoHandler) Update(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, responses.NewTodoResponse(todo))
 }
 
-func (h *TodoHandler) Delete(ctx *gin.Context) {}
+func (h *TodoHandler) Delete(ctx *gin.Context) {
+	id := ctx.Param("id")
+	if err := h.todo_repository.Delete(id); err != nil {
+		log.Printf("Failed to update todo ID=%s: %v", id, err)
+
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Internal Server Error"})
+		return
+	}
+
+	ctx.Status(http.StatusOK)
+}

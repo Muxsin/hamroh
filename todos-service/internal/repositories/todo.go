@@ -56,14 +56,19 @@ func (r *TodoRepository) GetById(id string) (models.Todo, error) {
 
 	result := r.db.First(&todo, id)
 	if result.Error != nil {
-		return todo, result.Error
+		return todo, gorm.ErrRecordNotFound
 	}
 
 	return todo, nil
 }
 
 func (r *TodoRepository) Update(id string) error {
-	return nil
+	todo, err := r.GetById(id)
+	if err != nil {
+		return err
+	}
+
+	return r.db.Updates(todo).Error
 }
 
 func (r *TodoRepository) Delete(id string) error {

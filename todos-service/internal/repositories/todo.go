@@ -1,6 +1,7 @@
 package repositories
 
 import (
+	"fmt"
 	"gorm.io/gorm"
 	"todos-service/internal/models"
 )
@@ -23,8 +24,24 @@ func NewTodoRepository(db *gorm.DB) TodoRepositoryInterface {
 	}
 }
 
+var ErrFailedToCreate error
+
 func (r *TodoRepository) Insert(todo *models.Todo) error {
-	return nil
+	tx := r.db.Begin()
+	defer func() {
+		if r := recover(); r != nil {
+			tx.Rollback()
+		}
+	}()
+
+	if err := tx.Create(todo).Error; err != nil {
+		tx.Rollback()
+		ErrFailedToCreate = fmt.Errorf("failed to create user: %w", err)
+
+		return ErrFailedToCreate
+	}
+
+	return tx.Commit().Error
 }
 
 func (r *TodoRepository) List() ([]*models.Todo, error) {

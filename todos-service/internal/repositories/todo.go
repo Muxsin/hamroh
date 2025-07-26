@@ -6,7 +6,7 @@ import (
 )
 
 type TodoRepositoryInterface interface {
-	Insert(todo models.Todo) error
+	Insert(todo *models.Todo) error
 	List() ([]models.Todo, error)
 	GetById(id string) (models.Todo, error)
 	Update(id string) error
@@ -23,7 +23,7 @@ func NewTodoRepository(db *gorm.DB) TodoRepositoryInterface {
 	}
 }
 
-func (r *TodoRepository) Insert(todo models.Todo) error {
+func (r *TodoRepository) Insert(todo *models.Todo) error {
 	tx := r.db.Begin()
 	defer func() {
 		if r := recover(); r != nil {

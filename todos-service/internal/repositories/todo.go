@@ -72,5 +72,10 @@ func (r *TodoRepository) Update(id string) error {
 }
 
 func (r *TodoRepository) Delete(id string) error {
-	return nil
+	todo, err := r.GetById(id)
+	if err != nil {
+		return err
+	}
+
+	return r.db.Delete(todo).Error
 }

@@ -8,8 +8,8 @@ import (
 type TodoRepositoryInterface interface {
 	Insert(todo *models.Todo) error
 	List() ([]models.Todo, error)
-	GetById(id string) (models.Todo, error)
-	Update(id string) error
+	GetById(id string) (*models.Todo, error)
+	Update(id string, todo *models.Todo) error
 	Delete(id string) error
 }
 
@@ -51,24 +51,19 @@ func (r *TodoRepository) List() ([]models.Todo, error) {
 	return todos, nil
 }
 
-func (r *TodoRepository) GetById(id string) (models.Todo, error) {
+func (r *TodoRepository) GetById(id string) (*models.Todo, error) {
 	var todo models.Todo
 
-	result := r.db.First(&todo, id)
-	if result.Error != nil {
-		return todo, gorm.ErrRecordNotFound
+	err := r.db.First(&todo, id).Error
+	if err != nil {
+		return nil, err
 	}
 
-	return todo, nil
+	return &todo, nil
 }
 
-func (r *TodoRepository) Update(id string) error {
-	todo, err := r.GetById(id)
-	if err != nil {
-		return err
-	}
-
-	return r.db.Updates(todo).Error
+func (r *TodoRepository) Update(id string, todo *models.Todo) error {
+	return r.db.Where("id = ?", id).Updates(todo).Error
 }
 
 func (r *TodoRepository) Delete(id string) error {

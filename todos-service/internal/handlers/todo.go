@@ -88,6 +88,30 @@ func (h *TodoHandler) GetById(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, response)
 }
 
-func (h *TodoHandler) Update(ctx *gin.Context) {}
+func (h *TodoHandler) Update(ctx *gin.Context) {
+	var request requests.UpdateTodoRequest
+	if err := ctx.ShouldBind(&request); err != nil {
+		log.Printf("Invalid request: %v", err)
+
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request"})
+		return
+	}
+
+	id := ctx.Param("id")
+	todo := &models.Todo{
+		Text:   request.Text,
+		Done:   request.Done,
+		UserID: request.UserID,
+	}
+
+	if err := h.todo_repository.Update(id, todo); err != nil {
+		log.Printf("Failed to update todo ID=%s: %v", id, err)
+
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Internal Server Error"})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, responses.NewTodoResponse(todo))
+}
 
 func (h *TodoHandler) Delete(ctx *gin.Context) {}

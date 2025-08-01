@@ -1,24 +1,24 @@
 services:
-  app:
-    image: 'jc21/nginx-proxy-manager:latest'
-    restart: unless-stopped
-    ports:
-      - '80:80'
-      - '81:81'
-      - '443:443'
-    volumes:
-      - ./data:/data
-      - ./letsencrypt:/etc/letsencrypt
-    depends_on:
-      - todos-service
-
-  nginx:
-    image: nginx:latest
-    restart: unless-stopped
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-    depends_on:
-      - todos-service
+#  app:
+#    image: 'jc21/nginx-proxy-manager:latest'
+#    restart: unless-stopped
+#    ports:
+#      - '80:80'
+#      - '81:81'
+#      - '443:443'
+#    volumes:
+#      - ./data:/data
+#      - ./letsencrypt:/etc/letsencrypt
+#    depends_on:
+#      - todos-service
+#
+#  nginx:
+#    image: nginx:latest
+#    restart: unless-stopped
+#    volumes:
+#      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+#    depends_on:
+#      - todos-service
 
   postgres:
     image: postgres:latest
@@ -31,12 +31,12 @@ services:
     ports:
       - "5432:5432"
 
-  todos-service:
-    image: golang:1.24-alpine
-    command: sh -c "go run ./cmd/migrate/main.go && go run ./cmd/main.go"
-    restart: unless-stopped
-    working_dir: /todos-service
-    volumes:
-      - ./todos-service:/todos-service
-    depends_on:
-      - postgres
+#  todos-service:
+#    image: golang:1.24-alpine
+#    command: sh -c "go run ./cmd/todo/migrate/main.go && go run ./cmd/todo/main.go"
+#    restart: unless-stopped
+#    working_dir: /todo
+#    volumes:
+#      - ./projects/todo:/todo
+#    depends_on:
+#      - postgres

@@ -5,7 +5,7 @@ import (
 	"hamroh-todo/internal/models"
 )
 
-func (s *Service) Create(todo *models.Todo) error {
+func (s *service) Create(todo *models.Todo) error {
 	if todo.Title == "" {
 		return errors.New("title is required")
 	}

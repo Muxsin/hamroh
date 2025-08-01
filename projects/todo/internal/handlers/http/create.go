@@ -6,19 +6,19 @@ import (
 	"time"
 )
 
-type CreateTodoRequest struct {
-	Title string `json:"title"`
+type createTodoRequest struct {
+	title string
 }
 
-type CreateTodoResponse struct {
-	Id        uint      `json:"id"`
-	Title     string    `json:"title"`
-	Completed bool      `json:"completed"`
-	CreatedAt time.Time `json:"created_at"`
+type createTodoResponse struct {
+	id        uint
+	title     string
+	completed bool
+	createdAt time.Time `json:"created_at"`
 }
 
-func (h *Handler) Create(c *gin.Context) {
-	var req CreateTodoRequest
+func (h *handler) Create(c *gin.Context) {
+	var req createTodoRequest
 
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -27,7 +27,7 @@ func (h *Handler) Create(c *gin.Context) {
 		return
 	}
 
-	todo, err := h.UseCase.Create(req.Title)
+	todo, err := h.useCase.Create(req.title)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
@@ -35,11 +35,11 @@ func (h *Handler) Create(c *gin.Context) {
 		return
 	}
 
-	response := CreateTodoResponse{
-		Id:        todo.ID,
-		Title:     todo.Title,
-		Completed: todo.Completed,
-		CreatedAt: todo.CreatedAt,
+	response := createTodoResponse{
+		id:        todo.ID,
+		title:     todo.Title,
+		completed: todo.Completed,
+		createdAt: todo.CreatedAt,
 	}
 
 	c.JSON(http.StatusCreated, response)

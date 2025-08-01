@@ -4,17 +4,17 @@ import (
 	"hamroh-todo/internal/models"
 )
 
-type UseCase interface {
+type useCase interface {
 	Create(title string) (*models.Todo, error)
 	List() ([]models.Todo, error)
 }
 
-type Handler struct {
-	UseCase UseCase
+type handler struct {
+	useCase useCase
 }
 
-func New(useCase UseCase) *Handler {
-	return &Handler{
-		UseCase: useCase,
+func New(useCase useCase) *handler {
+	return &handler{
+		useCase: useCase,
 	}
 }

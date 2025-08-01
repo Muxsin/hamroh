@@ -5,6 +5,6 @@ import (
 	"net/http"
 )
 
-func (h *Handler) Get(c *gin.Context) {
+func (h *handler) Get(c *gin.Context) {
 	c.JSON(http.StatusOK, "Todo gotten!")
 }

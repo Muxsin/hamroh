@@ -5,6 +5,6 @@ import (
 	"net/http"
 )
 
-func (h *Handler) Delete(c *gin.Context) {
+func (h *handler) Delete(c *gin.Context) {
 	c.JSON(http.StatusOK, "Todo deleted!")
 }

@@ -2,12 +2,12 @@ package repositories
 
 import "gorm.io/gorm"
 
-type Repository struct {
+type repository struct {
 	db *gorm.DB
 }
 
-func New(db *gorm.DB) *Repository {
-	return &Repository{
+func New(db *gorm.DB) *repository {
+	return &repository{
 		db: db,
 	}
 }

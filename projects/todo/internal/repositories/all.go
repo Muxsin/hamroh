@@ -2,7 +2,7 @@ package repositories
 
 import "hamroh-todo/internal/models"
 
-func (r *Repository) All() ([]models.Todo, error) {
+func (r *repository) All() ([]models.Todo, error) {
 	var todos []models.Todo
 
 	result := r.db.Find(&todos)

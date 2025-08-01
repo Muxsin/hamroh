@@ -2,7 +2,7 @@ package repositories
 
 import "hamroh-todo/internal/models"
 
-func (r *Repository) Insert(todo *models.Todo) error {
+func (r *repository) Insert(todo *models.Todo) error {
 	tx := r.db.Begin()
 	defer func() {
 		if r := recover(); r != nil {

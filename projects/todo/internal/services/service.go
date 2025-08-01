@@ -2,17 +2,17 @@ package services
 
 import "hamroh-todo/internal/models"
 
-type TodoRepository interface {
+type todoRepository interface {
 	Insert(todo *models.Todo) error
 	All() ([]models.Todo, error)
 }
 
-type Service struct {
-	repository TodoRepository
+type service struct {
+	repository todoRepository
 }
 
-func New(repository TodoRepository) *Service {
-	return &Service{
+func New(repository todoRepository) *service {
+	return &service{
 		repository: repository,
 	}
 }

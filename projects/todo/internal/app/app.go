@@ -3,22 +3,20 @@ package app
 import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
+	"hamroh-todo/internal/configs"
 	"hamroh-todo/internal/handlers/http"
 	"hamroh-todo/internal/repositories"
 	"hamroh-todo/internal/services"
 	use_cases "hamroh-todo/internal/use-cases"
 )
 
-type configs interface {
-}
-
 type App struct {
-	configs configs
+	configs *configs.Configs
 	router  *gin.Engine
 	db      *gorm.DB
 }
 
-func New(configs configs, db *gorm.DB) *App {
+func New(configs *configs.Configs, db *gorm.DB) *App {
 	app := &App{
 		configs: configs,
 		router:  gin.New(),

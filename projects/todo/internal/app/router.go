@@ -14,10 +14,8 @@ type handler interface {
 
 func (a *App) LoadRoutes(h handler) *gin.Engine {
 	router := gin.New()
-	router.GET("/", func(c *gin.Context) {
-		c.JSON(200, a.configs.AppName+" working!")
-	})
-	router.GET("/:id", h.Get)
+	router.GET("/todos", h.List)
+	router.GET("/todos/:id", h.Get)
 
 	return router
 }

@@ -15,7 +15,9 @@ func main() {
 
 	db := database.Connect()
 
-	db.AutoMigrate(&models.Todo{})
+	if err := db.AutoMigrate(&models.Todo{}); err != nil {
+		panic(err)
+	}
 
 	log.Println("migrate the schemas finished")
 }

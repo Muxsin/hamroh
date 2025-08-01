@@ -7,10 +7,10 @@ import (
 )
 
 type listTodoResponse struct {
-	id        uint
-	title     string
-	completed bool
-	createdAt time.Time `json:"created_at"`
+	Id        uint      `json:"Id"`
+	Title     string    `json:"title"`
+	Completed bool      `json:"completed"`
+	CreatedAt time.Time `json:"created_at"`
 }
 
 func (h *handler) List(c *gin.Context) {
@@ -23,10 +23,10 @@ func (h *handler) List(c *gin.Context) {
 	var response []listTodoResponse
 	for _, todo := range todos {
 		response = append(response, listTodoResponse{
-			id:        todo.ID,
-			title:     todo.Title,
-			completed: todo.Completed,
-			createdAt: todo.CreatedAt,
+			Id:        todo.ID,
+			Title:     todo.Title,
+			Completed: todo.Completed,
+			CreatedAt: todo.CreatedAt,
 		})
 	}
 

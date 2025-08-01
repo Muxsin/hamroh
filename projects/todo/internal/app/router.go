@@ -17,6 +17,7 @@ func (a *App) LoadRoutes(h handler) *gin.Engine {
 	router.GET("/todos", h.List)
 	router.GET("/todos/:id", h.Get)
 	router.POST("/todos", h.Create)
+	router.PUT("/todos/:id", h.Update)
 
 	return router
 }

@@ -2,25 +2,33 @@ package app
 
 import (
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 	"hamroh-todo/internal/configs"
+	handlers "hamroh-todo/internal/handlers/http"
+	"hamroh-todo/internal/repositories"
+	"hamroh-todo/internal/services"
+	use_cases "hamroh-todo/internal/use-cases"
 )
 
 type App struct {
 	configs *configs.Configs
 	router  *gin.Engine
+	db      *gorm.DB
 }
 
-func New(configs *configs.Configs) *App {
+func New(configs *configs.Configs, db *gorm.DB) *App {
 	app := &App{
 		configs: configs,
+		router:  gin.New(),
+		db:      db,
 	}
 
-	router := gin.New()
-	router.GET("/", func(c *gin.Context) {
-		c.JSON(200, "Done!")
-	})
+	todoRepository := repositories.New(app.db)
+	todoService := services.New(todoRepository)
+	todoUseCase := use_cases.New(todoService)
+	todoHandler := handlers.New(todoUseCase)
 
-	app.router = router
+	app.router = app.LoadRoutes(todoHandler)
 
 	return app
 }

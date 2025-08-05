@@ -6,5 +6,12 @@ import (
 )
 
 func (h *handler) Delete(c *gin.Context) {
-	c.JSON(http.StatusOK, "Todo deleted!")
+	id := c.Param("id")
+
+	if err := h.useCase.Delete(id); err != nil {
+		c.Status(http.StatusInternalServerError)
+		return
+	}
+
+	c.Status(http.StatusOK)
 }

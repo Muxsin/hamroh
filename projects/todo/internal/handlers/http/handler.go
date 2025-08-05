@@ -9,6 +9,7 @@ type useCase interface {
 	List() ([]models.Todo, error)
 	GetById(id string) (models.Todo, error)
 	Update(todo *models.Todo) error
+	Delete(id string) error
 }
 
 type handler struct {

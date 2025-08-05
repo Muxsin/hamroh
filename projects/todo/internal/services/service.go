@@ -7,6 +7,7 @@ type todoRepository interface {
 	All() ([]models.Todo, error)
 	GetById(id string) (models.Todo, error)
 	Update(todo *models.Todo) error
+	Delete(id string) error
 }
 
 type service struct {

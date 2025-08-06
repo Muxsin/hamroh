@@ -12,7 +12,7 @@ type updateTodoRequest struct {
 
 func (h *handler) Update(c *gin.Context) {
 	id := c.Param("id")
-	todo, err := h.useCase.GetById(id)
+	todo, err := h.useCase.GetOne(id)
 	if err != nil {
 		c.Status(http.StatusNotFound)
 		return

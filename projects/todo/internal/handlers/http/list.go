@@ -14,7 +14,7 @@ type listTodoResponse struct {
 }
 
 func (h *handler) List(c *gin.Context) {
-	todos, err := h.useCase.List()
+	todos, err := h.useCase.GetAll()
 	if err != nil {
 		c.AbortWithStatus(http.StatusInternalServerError)
 		return

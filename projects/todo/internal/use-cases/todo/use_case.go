@@ -1,11 +1,11 @@
-package use_cases
+package todo
 
 import "hamroh-todo/internal/models"
 
 type todoService interface {
 	Create(todo *models.Todo) error
-	List() ([]models.Todo, error)
-	GetById(id string) (models.Todo, error)
+	GetAll() ([]models.Todo, error)
+	GetOne(id string) (models.Todo, error)
 	Update(todo *models.Todo) error
 	Delete(id string) error
 }

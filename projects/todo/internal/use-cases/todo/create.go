@@ -1,4 +1,4 @@
-package use_cases
+package todo
 
 import "hamroh-todo/internal/models"
 

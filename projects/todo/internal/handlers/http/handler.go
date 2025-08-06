@@ -6,8 +6,8 @@ import (
 
 type useCase interface {
 	Create(title string) (*models.Todo, error)
-	List() ([]models.Todo, error)
-	GetById(id string) (models.Todo, error)
+	GetAll() ([]models.Todo, error)
+	GetOne(id string) (models.Todo, error)
 	Update(todo *models.Todo) error
 	Delete(id string) error
 }

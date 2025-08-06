@@ -7,7 +7,7 @@ import (
 	"hamroh-todo/internal/handlers/http"
 	"hamroh-todo/internal/repositories"
 	"hamroh-todo/internal/services"
-	use_cases "hamroh-todo/internal/use-cases"
+	use_cases "hamroh-todo/internal/use-cases/todo"
 )
 
 type App struct {

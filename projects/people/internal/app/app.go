@@ -4,6 +4,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 	"kodnavis/people/internal/configs"
+	"kodnavis/people/internal/handlers"
+	"kodnavis/people/internal/repositories"
+	"kodnavis/people/internal/services"
+	"kodnavis/people/internal/use-cases/people"
 )
 
 type app struct {
@@ -18,7 +22,12 @@ func New(configs *configs.Configs, db *gorm.DB) *app {
 		db:      db,
 	}
 
-	app.router = app.LoadRoutes()
+	peopleRepository := repositories.New(app.db)
+	peopleService := services.New(peopleRepository)
+	peopleUseCase := people.New(peopleService)
+	peopleHandler := handlers.New(peopleUseCase)
+
+	app.router = app.LoadRoutes(peopleHandler)
 
 	return app
 }

@@ -6,6 +6,7 @@ type peopleRepository interface {
 	Insert(people *models.People) error
 	GetAll() ([]*models.People, error)
 	GetById(id string) (*models.People, error)
+	Delete(id string) error
 }
 
 type service struct {

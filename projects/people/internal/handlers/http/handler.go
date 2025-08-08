@@ -6,6 +6,7 @@ type peopleUseCase interface {
 	Create(people *models.People) error
 	GetAll() ([]*models.People, error)
 	GetOne(id string) (*models.People, error)
+	Delete(id string) error
 }
 
 type handler struct {

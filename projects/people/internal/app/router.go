@@ -7,6 +7,7 @@ import (
 type peopleHandler interface {
 	Create(c *gin.Context)
 	List(c *gin.Context)
+	Get(c *gin.Context)
 }
 
 func (a *app) LoadRoutes(handler peopleHandler) *gin.Engine {
@@ -14,6 +15,7 @@ func (a *app) LoadRoutes(handler peopleHandler) *gin.Engine {
 
 	router.GET("/people", handler.List)
 	router.POST("/people", handler.Create)
+	router.GET("/people/:id", handler.Get)
 
 	return router
 }

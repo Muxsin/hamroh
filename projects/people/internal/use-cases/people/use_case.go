@@ -5,6 +5,7 @@ import "kodnavis/people/internal/models"
 type peopleService interface {
 	Create(people *models.People) error
 	GetAll() ([]*models.People, error)
+	GetOne(id string) (*models.People, error)
 }
 
 type useCase struct {

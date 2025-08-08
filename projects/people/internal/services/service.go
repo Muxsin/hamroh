@@ -5,6 +5,7 @@ import "kodnavis/people/internal/models"
 type peopleRepository interface {
 	Insert(people *models.People) error
 	GetAll() ([]*models.People, error)
+	GetById(id string) (*models.People, error)
 }
 
 type service struct {

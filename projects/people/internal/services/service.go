@@ -7,6 +7,7 @@ type peopleRepository interface {
 	GetAll() ([]*models.People, error)
 	GetById(id string) (*models.People, error)
 	Delete(id string) error
+	Update(people *models.People) error
 }
 
 type service struct {

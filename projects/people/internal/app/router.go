@@ -9,6 +9,7 @@ type peopleHandler interface {
 	List(c *gin.Context)
 	Get(c *gin.Context)
 	Delete(c *gin.Context)
+	Update(c *gin.Context)
 }
 
 func (a *app) LoadRoutes(handler peopleHandler) *gin.Engine {
@@ -18,6 +19,7 @@ func (a *app) LoadRoutes(handler peopleHandler) *gin.Engine {
 	router.POST("/people", handler.Create)
 	router.GET("/people/:id", handler.Get)
 	router.DELETE("/people/:id", handler.Delete)
+	router.PUT("/people/:id", handler.Update)
 
 	return router
 }

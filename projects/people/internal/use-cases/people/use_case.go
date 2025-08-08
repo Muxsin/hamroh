@@ -7,6 +7,7 @@ type peopleService interface {
 	GetAll() ([]*models.People, error)
 	GetOne(id string) (*models.People, error)
 	Delete(id string) error
+	Update(people *models.People) error
 }
 
 type useCase struct {

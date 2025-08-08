@@ -21,6 +21,11 @@ func (h *handler) Create(c *gin.Context) {
 		return
 	}
 
+	if err := validate.Struct(req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
 	people := &models.People{
 		Name:      req.Name,
 		Surname:   req.Surname,

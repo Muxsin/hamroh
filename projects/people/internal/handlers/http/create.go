@@ -9,9 +9,9 @@ import (
 )
 
 type createPeopleRequest struct {
-	Name     string    `json:"name" validate:"required"`
-	Surname  string    `json:"surname" validate:"required"`
-	Birthday time.Time `json:"birthday" validate:"required"`
+	Name      string    `json:"name" validate:"required"`
+	Surname   string    `json:"surname" validate:"required"`
+	Birthdate time.Time `json:"birthdate" validate:"required"`
 }
 
 func (h *handler) Create(c *gin.Context) {
@@ -24,7 +24,7 @@ func (h *handler) Create(c *gin.Context) {
 	people := &models.People{
 		Name:      req.Name,
 		Surname:   req.Surname,
-		Birthdate: req.Birthday,
+		Birthdate: req.Birthdate,
 	}
 
 	if err := h.useCase.Create(people); err != nil {
@@ -34,5 +34,5 @@ func (h *handler) Create(c *gin.Context) {
 		return
 	}
 
-	c.Status(http.StatusCreated)
+	c.JSON(http.StatusCreated, people)
 }

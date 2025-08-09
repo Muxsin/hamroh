@@ -1,7 +1,10 @@
 package http
 
 import (
+	"errors"
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
+	"log"
 	"net/http"
 )
 
@@ -14,7 +17,14 @@ func (h *handler) Update(c *gin.Context) {
 	id := c.Param("id")
 	todo, err := h.useCase.GetOne(id)
 	if err != nil {
-		c.Status(http.StatusNotFound)
+		log.Println(err)
+
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			c.Status(http.StatusNotFound)
+			return
+		}
+
+		c.Status(http.StatusInternalServerError)
 		return
 	}
 
